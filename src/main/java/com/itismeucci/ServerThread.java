@@ -10,14 +10,19 @@ public class ServerThread extends Thread {
     String stringaModificata = null;
     BufferedReader inDalClient;
     DataOutputStream outVersoClient;
+    ServerLista lista;
 
-    public ServerThread(Socket socket, ServerSocket server) {
+    public ServerThread(Socket socket, ServerSocket server, ServerLista lista) {
         this.client = socket;
         this.server = server;
+        this.lista = lista;
+
+        lista.addClient(client);
     }
 
     public void run() {
         try {
+            this.lista.run();
             comunica();
         } catch (Exception e) {
             e.printStackTrace(System.out);

@@ -15,7 +15,7 @@ public class Client {
     public static String nomeUtente;
 
     public Socket connetti() {
-        System.out.println("Client partito in esecuzione");
+        System.out.println("Inizializzazione nel gruppo di chat");
         try {
             
             tastiera = new BufferedReader(new InputStreamReader(System.in));

@@ -23,8 +23,9 @@ public class ServerLista extends Thread {
     public void run() {
         try {
             for (Socket client : lista) { //faccio un foreach dove vado a mandare il messaggio a tutti i client
+                System.out.println(client);
                 outVersoClient = new DataOutputStream(client.getOutputStream());
-                outVersoClient.writeBytes(nomeUtente + "join the chat");
+                outVersoClient.writeBytes(nomeUtente + " join the chat");
             }
         } catch (Exception e) {
             //in caso di errore

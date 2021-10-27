@@ -9,7 +9,9 @@ public class Server {
 
             for (;;) {
                 Socket socket = serverSocket.accept();
-                ServerThread serverThread = new ServerThread(socket, serverSocket);
+                ServerLista listener = new ServerLista(); //
+                ServerThread serverThread = new ServerThread(socket, serverSocket, listener);
+                
                 serverThread.start();
                 System.out.println(Client.nomeUtente + " connected");
             }
