@@ -12,7 +12,7 @@ public class Client {
     String stringaRicevutaDalServer;
     DataOutputStream outVersoServer;
     BufferedReader inDalServer;
-    String nomeUtente;
+    public static String nomeUtente;
 
     public Socket connetti() {
         System.out.println("Client partito in esecuzione");
@@ -26,7 +26,7 @@ public class Client {
 
             inDalServer = new BufferedReader(new InputStreamReader(miosocket.getInputStream()));
 
-            System.out.println("Inserire nome utente: ");
+            System.out.print("Inserire nome utente: ");
 
             nomeUtente = tastiera.readLine();
 
@@ -44,7 +44,7 @@ public class Client {
     public void comunica() {
         for (;;) {
             try {
-                System.out.println("Messaggio:" + '\n');
+                System.out.print("Messaggio:");
                 stringaUtente = tastiera.readLine();
 
                 // la spedisco al server

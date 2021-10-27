@@ -8,11 +8,10 @@ public class Server {
             ServerSocket serverSocket = new ServerSocket(6789);
 
             for (;;) {
-                System.out.println("Server in attesa ...");
                 Socket socket = serverSocket.accept();
-                System.out.println("Server socket " + socket);
                 ServerThread serverThread = new ServerThread(socket, serverSocket);
                 serverThread.start();
+                System.out.println(Client.nomeUtente + " connected");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
