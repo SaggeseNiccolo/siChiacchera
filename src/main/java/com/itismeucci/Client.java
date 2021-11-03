@@ -12,7 +12,6 @@ public class Client {
     String stringaRicevutaDalServer;
     DataOutputStream outVersoServer;
     BufferedReader inDalServer;
-    public static String nomeUtente;
 
     public Socket connetti() {
         System.out.println("Inizializzazione nel gruppo di chat");
@@ -26,7 +25,6 @@ public class Client {
 
             inDalServer = new BufferedReader(new InputStreamReader(miosocket.getInputStream()));
 
-            nomeUtente = tastiera.readLine();
 
         } catch (UnknownHostException e) {
             System.err.println("Host sconosciuto");

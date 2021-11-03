@@ -27,7 +27,8 @@ public class ServerListener extends Thread {
 
                 outVersoClient.writeBytes("connessione nuovo utente: " + nomi.get(0) + '\n');
 
-                System.out.println("Esco dal for");
+                System.out.println(client);
+
             }
         } catch (Exception e) {
             // in caso di errore
