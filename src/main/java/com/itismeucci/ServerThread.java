@@ -45,14 +45,14 @@ public class ServerThread extends Thread {
             if (stringaRicevuta.equals("EXIT")) { // IN QUESTO CASO DOBBIAMO FAR USCIRE IL CLIENT
 
                 outVersoClient.writeBytes(stringaRicevuta + "(=>server in chiusura ...)" + '\n');
-                System.out.println("Echo sul server in chiusura :" + stringaRicevuta);
+                // System.out.println("Echo sul server in chiusura :" + stringaRicevuta);
                 break;
 
             } else if (conta == 0) {
                 nomeUtente = stringaRicevuta;
-                System.out.println(nomeUtente + " è entrato nella chat");
+                System.out.println(nomeUtente + " si è connesso");
 
-                lista.addNome(nomeUtente);
+                // lista.addNome(nomeUtente);
 
                 lista.start();
 
@@ -65,7 +65,8 @@ public class ServerThread extends Thread {
         }
         outVersoClient.close();
         inDalClient.close();
-        System.out.println("Chiusura socket" + client);
+        // System.out.println("Chiusura socket " + client);
+        System.out.println(nomeUtente + " si è disconnesso");
         client.close();
 
     }

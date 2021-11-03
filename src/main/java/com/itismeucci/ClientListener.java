@@ -11,7 +11,7 @@ public class ClientListener extends Thread {
 
     public void run() {
         for (;;) {
-            inDalServer = new BufferedReader(new InputStreamReader(server.getInputStream()));
+            // inDalServer = new BufferedReader(new InputStreamReader(server.getInputStream()));
         }
     }
 

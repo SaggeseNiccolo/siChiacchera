@@ -25,11 +25,11 @@ public class ServerListener extends Thread {
 
                 outVersoClient = new DataOutputStream(client.getOutputStream());
 
-                outVersoClient.writeBytes(nomeUtente + ": " + strMessaggio + '\n');
+                // outVersoClient.writeBytes(nomeUtente + ": " + strMessaggio + '\n');
 
             }
 
-            System.out.println("ho inviato il messaggio a tutti i client.");
+            // System.out.println("ho inviato il messaggio a tutti i client.");
 
         } catch (Exception e) {
             // in caso di errore
@@ -45,17 +45,17 @@ public class ServerListener extends Thread {
 
     public void inoltra() { //parte dove invio a tutti i client la connessione di un determinato utente
 
-        for (Socket client : sockets) { 
+        // for (Socket client : sockets) { 
 
-            // outVersoClient = new DataOutputStream(client.getOutputStream());
+        //     outVersoClient = new DataOutputStream(client.getOutputStream());
 
-            // outVersoClient.writeBytes("connessione nuovo utente: " + nomi.get(i) + '\n');
+        //     outVersoClient.writeBytes("connessione nuovo utente: " + nomi.get(i) + '\n');
 
-            // System.out.println(client);
+        //     System.out.println(client);
 
-            // i++;
+        //     i++;
 
-        }
+        // }
     }
 
 }
