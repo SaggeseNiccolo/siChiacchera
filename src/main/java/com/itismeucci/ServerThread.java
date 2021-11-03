@@ -10,9 +10,13 @@ public class ServerThread extends Thread {
     String stringaModificata = null;
     BufferedReader inDalClient;
     DataOutputStream outVersoClient;
-    ServerLista lista;
+    ServerListener lista;
 
-    public ServerThread(Socket socket, ServerSocket server, ServerLista lista) {
+    String nomeUtente = null;
+    int conta = 0;
+
+
+    public ServerThread(Socket socket, ServerSocket server, ServerListener lista) {
         this.client = socket;
         this.server = server;
         this.lista = lista;
@@ -34,17 +38,28 @@ public class ServerThread extends Thread {
         inDalClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
         outVersoClient = new DataOutputStream(client.getOutputStream());
 
+        lista.addClient(client);
+
         for (;;) {
             stringaRicevuta = inDalClient.readLine();
-            if (stringaRicevuta == null || stringaRicevuta.equals("FINE")) {
+
+            if (stringaRicevuta.equals("EXIT")) { //IN QUESTO CASO DOBBIAMO FAR USCIRE IL CLIENT
+
                 outVersoClient.writeBytes(stringaRicevuta + "(=>server in chiusura ...)" + '\n');
                 System.out.println("Echo sul server in chiusura :" + stringaRicevuta);
                 break;
-            } else if(stringaRicevuta.equals("STOP")) { //controllo sulla stringa STOP
-                outVersoClient.writeBytes(stringaRicevuta + "(=>server in chiusura ...)" + '\n');
-                System.out.println("Echo sul server in chiusura :" + stringaRicevuta);
-                break;
-            } else {
+
+            }else if(conta == 0){
+                nomeUtente = stringaRicevuta;
+                System.out.println("nome utente = " + nomeUtente);
+
+                lista.addNome(nomeUtente);
+
+                lista.start();
+
+                conta++;
+
+            }else{
                 outVersoClient.writeBytes(stringaRicevuta + " (ricevuta e ritrasmessa)" + '\n');
                 System.out.println("Echo sul server :" + stringaRicevuta);
             }
@@ -53,11 +68,6 @@ public class ServerThread extends Thread {
         inDalClient.close();
         System.out.println("Chiusura socket" + client);
         client.close();
-
-        // if(stringaRicevuta.equals("STOP")) {
-        //     System.out.println("Chiusura SERVER: " +  server);
-        //     server.close();
-        // }
 
     }
 }

@@ -26,8 +26,6 @@ public class Client {
 
             inDalServer = new BufferedReader(new InputStreamReader(miosocket.getInputStream()));
 
-            System.out.print("Inserire nome utente: ");
-
             nomeUtente = tastiera.readLine();
 
         } catch (UnknownHostException e) {

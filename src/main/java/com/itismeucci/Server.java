@@ -6,14 +6,15 @@ public class Server {
     public void start() {
         try {
             ServerSocket serverSocket = new ServerSocket(6789);
+            System.out.println("il server è partito");
 
             for (;;) {
                 Socket socket = serverSocket.accept();
-                ServerLista listener = new ServerLista(); //
+                ServerListener listener = new ServerListener(); //
                 ServerThread serverThread = new ServerThread(socket, serverSocket, listener);
                 
                 serverThread.start();
-                System.out.println(Client.nomeUtente + " connected");
+
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
