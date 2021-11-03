@@ -8,9 +8,9 @@ public class ServerListener extends Thread {
     // creato vettore dove mi salvo tutti i socket dei client
     Vector<Socket> sockets = new Vector<Socket>();
 
-    Vector<String> nomi = new Vector<String>();
-
     DataOutputStream outVersoClient;
+
+    String nomeUtente = null;
 
     int i = 0;
 
@@ -18,18 +18,19 @@ public class ServerListener extends Thread {
     public ServerListener() {
     }
 
-    // runnable dove vengono chiusi tutti i client dentro il vector
     public void run() {
         try {
-            for (Socket client : sockets) { // faccio un foreach dove vado a chiudere tutti i socket dei client
+            // devo fare in modo di mandare il messaggio a tutti i client
+            for (Socket client : sockets) {
 
                 outVersoClient = new DataOutputStream(client.getOutputStream());
 
-                outVersoClient.writeBytes("connessione nuovo utente: " + nomi.get(0) + '\n');
-
-                System.out.println(client);
+                outVersoClient.writeBytes(nomeUtente + ": " + strMessaggio + '\n');
 
             }
+
+            System.out.println("ho inviato il messaggio a tutti i client.");
+
         } catch (Exception e) {
             // in caso di errore
             System.out.println("Nessun elemento dentro il vettore, istanza prima un client.");
@@ -42,9 +43,19 @@ public class ServerListener extends Thread {
         sockets.add(x);
     }
 
-    // aggiungo il nome al vettore nomi
-    public void addNome(String x) {
-        nomi.add(x);
+    public void inoltra() { //parte dove invio a tutti i client la connessione di un determinato utente
+
+        for (Socket client : sockets) { 
+
+            // outVersoClient = new DataOutputStream(client.getOutputStream());
+
+            // outVersoClient.writeBytes("connessione nuovo utente: " + nomi.get(i) + '\n');
+
+            // System.out.println(client);
+
+            // i++;
+
+        }
     }
 
 }
