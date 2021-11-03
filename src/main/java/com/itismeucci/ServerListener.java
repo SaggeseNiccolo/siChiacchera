@@ -47,5 +47,4 @@ public class ServerListener extends Thread {
         nomi.add(x);
     }
 
-
 }

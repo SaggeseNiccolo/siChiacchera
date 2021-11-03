@@ -14,9 +14,9 @@ public class Client {
     BufferedReader inDalServer;
 
     public Socket connetti() {
-        System.out.println("Inizializzazione nel gruppo di chat");
+        System.out.println("Ingresso nella chat");
         try {
-            
+
             tastiera = new BufferedReader(new InputStreamReader(System.in));
 
             miosocket = new Socket(nomeServer, portaServer);
@@ -24,7 +24,6 @@ public class Client {
             outVersoServer = new DataOutputStream(miosocket.getOutputStream());
 
             inDalServer = new BufferedReader(new InputStreamReader(miosocket.getInputStream()));
-
 
         } catch (UnknownHostException e) {
             System.err.println("Host sconosciuto");

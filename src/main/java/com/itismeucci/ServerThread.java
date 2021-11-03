@@ -15,7 +15,6 @@ public class ServerThread extends Thread {
     String nomeUtente = null;
     int conta = 0;
 
-
     public ServerThread(Socket socket, ServerSocket server, ServerListener lista) {
         this.client = socket;
         this.server = server;
@@ -43,13 +42,13 @@ public class ServerThread extends Thread {
         for (;;) {
             stringaRicevuta = inDalClient.readLine();
 
-            if (stringaRicevuta.equals("EXIT")) { //IN QUESTO CASO DOBBIAMO FAR USCIRE IL CLIENT
+            if (stringaRicevuta.equals("EXIT")) { // IN QUESTO CASO DOBBIAMO FAR USCIRE IL CLIENT
 
                 outVersoClient.writeBytes(stringaRicevuta + "(=>server in chiusura ...)" + '\n');
                 System.out.println("Echo sul server in chiusura :" + stringaRicevuta);
                 break;
 
-            }else if(conta == 0){
+            } else if (conta == 0) {
                 nomeUtente = stringaRicevuta;
                 System.out.println("nome utente = " + nomeUtente);
 
@@ -59,7 +58,7 @@ public class ServerThread extends Thread {
 
                 conta++;
 
-            }else{
+            } else {
                 outVersoClient.writeBytes(stringaRicevuta + " (ricevuta e ritrasmessa)" + '\n');
                 System.out.println("Echo sul server :" + stringaRicevuta);
             }

@@ -12,7 +12,7 @@ public class Server {
                 Socket socket = serverSocket.accept();
                 ServerListener listener = new ServerListener(); //
                 ServerThread serverThread = new ServerThread(socket, serverSocket, listener);
-                
+
                 serverThread.start();
 
             }
