@@ -50,7 +50,7 @@ public class ServerThread extends Thread {
 
             } else if (conta == 0) {
                 nomeUtente = stringaRicevuta;
-                System.out.println("nome utente = " + nomeUtente);
+                System.out.println(nomeUtente + " è entrato nella chat");
 
                 lista.addNome(nomeUtente);
 
@@ -60,7 +60,7 @@ public class ServerThread extends Thread {
 
             } else {
                 outVersoClient.writeBytes(stringaRicevuta + " (ricevuta e ritrasmessa)" + '\n');
-                System.out.println("Echo sul server :" + stringaRicevuta);
+                System.out.println(nomeUtente + ": " + stringaRicevuta);
             }
         }
         outVersoClient.close();

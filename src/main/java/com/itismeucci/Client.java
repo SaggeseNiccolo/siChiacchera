@@ -13,6 +13,8 @@ public class Client {
     DataOutputStream outVersoServer;
     BufferedReader inDalServer;
 
+    int conta = 0;
+
     public Socket connetti() {
         System.out.println("Ingresso nella chat");
         try {
@@ -39,21 +41,28 @@ public class Client {
     public void comunica() {
         for (;;) {
             try {
-                System.out.print("Messaggio:");
-                stringaUtente = tastiera.readLine();
+                if (conta == 0) {
+                    System.out.print("Inserisci nome utente: ");
+                    stringaUtente = tastiera.readLine();
+                    outVersoServer.writeBytes(stringaUtente + '\n');
+                    conta++;
+                } else {
+                    System.out.print("Messaggio: ");
+                    stringaUtente = tastiera.readLine();
 
-                // la spedisco al server
-                System.out.println("Invio messaggio...");
-                outVersoServer.writeBytes(stringaUtente + '\n');
+                    // la spedisco al server
+                    System.out.println("Invio messaggio...");
+                    outVersoServer.writeBytes(stringaUtente + '\n');
 
-                // leggo la risposta del server
-                stringaRicevutaDalServer = inDalServer.readLine();
-                System.out.println("Risposta dal server" + '\n' + stringaRicevutaDalServer);
+                    // leggo la risposta del server
+                    // stringaRicevutaDalServer = inDalServer.readLine();
+                    // System.out.println("Risposta dal server" + '\n' + stringaRicevutaDalServer);
 
-                if (stringaUtente.equals("FINE") || stringaUtente.equals("STOP")) {
-                    System.out.println("CLIENT: termina elaborazione e chiude connessione");
-                    miosocket.close();
-                    break;
+                    if (stringaUtente.equals("EXIT")) {
+                        System.out.println("Disconnessione dalla chat...");
+                        miosocket.close();
+                        break;
+                    }
                 }
 
             } catch (Exception e) {
