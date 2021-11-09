@@ -20,4 +20,4 @@ Client:
 - Il client invia un messaggio: (strMessaggio + "\n");
 - Il client per disconnettersi deve mandare un strMessaggio = "EXIT" --> (strMessaggio + '\n');
 
- /n indica la fine del messaggio
+ \n indica la fine del messaggio
