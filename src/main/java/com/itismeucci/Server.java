@@ -10,10 +10,10 @@ public class Server {
 
             for (;;) {
                 Socket socket = serverSocket.accept();
-                ServerListener listener = new ServerListener(); //
-                ServerThread serverThread = new ServerThread(socket, serverSocket, listener);
-
+                ServerListener listener1 = new ServerListener(socket, serverSocket);
+                ServerThread serverThread = new ServerThread(socket, serverSocket, listener1);
                 serverThread.start();
+                listener1.start();
 
             }
         } catch (Exception e) {
