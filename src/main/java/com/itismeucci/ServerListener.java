@@ -7,55 +7,57 @@ import java.util.*;
 public class ServerListener extends Thread {
     // creato vettore dove mi salvo tutti i socket dei client
     Vector<Socket> sockets = new Vector<Socket>();
-
+    HashMap<String, Socket> handler = new HashMap<String, Socket>();
+    String nomeUtente = null;
+    ServerSocket server = null;
+    Socket client = null;
+    String stringaRicevuta = null;
+    String stringaModificata = null;
+    BufferedReader inDalClient;
     DataOutputStream outVersoClient;
 
-    String nomeUtente = null;
-
-    int i = 0;
-
     // costruttore
-    public ServerListener() {
+    public ServerListener(Socket socket, ServerSocket server) {
+        this.client = socket;
+        this.server = server;
+        sockets.add(client);
     }
 
-    public void run() {
-        try {
-            // devo fare in modo di mandare il messaggio a tutti i client
-            for (Socket client : sockets) {
+    public void run(){
+    }
 
-                outVersoClient = new DataOutputStream(client.getOutputStream());
+    public void aggiungiSocket(String nomeUtente, Socket Client) throws Exception {
+        handler.put(nomeUtente, Client);
 
-                // outVersoClient.writeBytes(nomeUtente + ": " + strMessaggio + '\n');
-
-            }
-
-            // System.out.println("ho inviato il messaggio a tutti i client.");
-
-        } catch (Exception e) {
-            // in caso di errore
-            System.out.println("Nessun elemento dentro il vettore, istanza prima un client.");
+        for (Socket socket : handler.values()) {
+            outVersoClient = new DataOutputStream(socket.getOutputStream());
+            outVersoClient.writeBytes(nomeUtente + " è entrato nella chat.");
         }
-
     }
 
-    // aggiungo un client al vettore sockets
-    public void addClient(Socket x) {
-        sockets.add(x);
+    public void sendAll(String messaggio, String mittente) throws Exception {
+        for (Socket socket : handler.values()) {
+            outVersoClient = new DataOutputStream(socket.getOutputStream());
+            outVersoClient.writeBytes(mittente + " ha scritto:" + messaggio);
+        }
     }
 
-    public void inoltra() { //parte dove invio a tutti i client la connessione di un determinato utente
+    public void sentOne(String messaggio, String mittente, String destinatario) throws Exception {
+        for (String x : handler.keySet()) {
+            if (x == destinatario) {
+                outVersoClient = new DataOutputStream(handler.get(x).getOutputStream());
+                outVersoClient.writeBytes(mittente + " ha scritto (in privato):" + messaggio);
+            }
+        }
+    }
 
-        // for (Socket client : sockets) { 
+    public void remove(String nome) throws Exception{
+        handler.remove(nome);
 
-        //     outVersoClient = new DataOutputStream(client.getOutputStream());
-
-        //     outVersoClient.writeBytes("connessione nuovo utente: " + nomi.get(i) + '\n');
-
-        //     System.out.println(client);
-
-        //     i++;
-
-        // }
+        for (Socket socket : handler.values()) {
+            outVersoClient = new DataOutputStream(socket.getOutputStream());
+            outVersoClient.writeBytes(nomeUtente + " è uscito dalla chat.");
+        }
     }
 
 }
