@@ -8,24 +8,25 @@ public class ClientListener extends Thread {
     Client client = new Client();
     BufferedReader inDalServer;
     String stringaRicevutaDalServer;
-    Socket mioSocket = client.getSocket();
+    Socket mioSocket;
 
-    public ClientListener() {
+    // costruttore
+    public ClientListener(Socket socket) {
+        mioSocket = socket;
     }
 
     public void ascolta() throws IOException {
         inDalServer = new BufferedReader(new InputStreamReader(mioSocket.getInputStream()));
 
-        stringaRicevutaDalServer = inDalServer.readLine();
-
-        System.out.println(stringaRicevutaDalServer);
-
-        // for (;;) {}
+        for (;;) {
+            stringaRicevutaDalServer = inDalServer.readLine();
+            System.out.println(stringaRicevutaDalServer);
+        }
     }
 
     public void run() {
         try {
-            this.ascolta();
+            ascolta();
         } catch (IOException e) {
             e.printStackTrace();
         }

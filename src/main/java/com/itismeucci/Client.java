@@ -15,10 +15,6 @@ public class Client {
 
     int conta = 0;
 
-    public Socket getSocket() {
-        return miosocket;
-    }
-
     public Socket connetti() {
 
         System.out.println("Ingresso nella chat");
@@ -52,8 +48,8 @@ public class Client {
                     outVersoServer.writeBytes(stringaUtente + '\n');
                     conta++;
                 } else {
-                    ClientListener listener = new ClientListener();
-                    listener.run();
+                    ClientListener listener = new ClientListener(miosocket);
+                    listener.start();
 
                     System.out.print("Messaggio: ");
                     stringaUtente = tastiera.readLine();
