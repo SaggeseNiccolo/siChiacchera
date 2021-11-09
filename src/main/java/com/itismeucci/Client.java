@@ -15,7 +15,12 @@ public class Client {
 
     int conta = 0;
 
+    public Socket getSocket() {
+        return miosocket;
+    }
+
     public Socket connetti() {
+
         System.out.println("Ingresso nella chat");
         try {
 
@@ -47,6 +52,9 @@ public class Client {
                     outVersoServer.writeBytes(stringaUtente + '\n');
                     conta++;
                 } else {
+                    ClientListener listener = new ClientListener();
+                    listener.run();
+
                     System.out.print("Messaggio: ");
                     stringaUtente = tastiera.readLine();
 
@@ -73,7 +81,7 @@ public class Client {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Client client = new Client();
         client.connetti();
         client.comunica();
