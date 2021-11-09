@@ -60,8 +60,8 @@ public class ServerThread extends Thread {
         }
         // outVersoClient.close();
 
-        inDalClient.close(); //da errore perchè per ora non ho messo un break
-        
+        inDalClient.close(); //da errore perchè per ora non ho messo un breakk
+
         // System.out.println("Chiusura socket " + client);
         System.out.println(nomeUtente + " si è disconnesso");
         client.close();
