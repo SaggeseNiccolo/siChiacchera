@@ -1,5 +1,4 @@
 package com.itismeucci;
-
 import java.io.*;
 import java.net.*;
 
@@ -10,11 +9,10 @@ public class ServerThread extends Thread {
     String stringaRicevuta = null;
     String stringaModificata = null;
     BufferedReader inDalClient;
-    // DataOutputStream outVersoClient;
-
+    DataOutputStream outVersoClient;
     String nomeUtente = null;
-
     int conta = 0;
+    String destinatario;
 
     public ServerThread(Socket socket, ServerSocket server, ServerListener listener1) {
         this.client = socket;
@@ -33,38 +31,45 @@ public class ServerThread extends Thread {
     public void comunica() throws Exception {
 
         inDalClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
-        // outVersoClient = new DataOutputStream(client.getOutputStream());
+        outVersoClient = new DataOutputStream(client.getOutputStream());
 
 
         for (;;) {
-            stringaRicevuta = inDalClient.readLine();
+            stringaRicevuta = inDalClient.readLine(); //leggo la stringa inviata dal client
 
-            // if (stringaRicevuta.equals("EXIT")) { // IN QUESTO CASO DOBBIAMO FAR USCIRE IL CLIENT
+            if (conta == 0) { // se è la prima allora è perforza il nome dell'utente poichè questo viene richiesto all'inizio dell'esecuzione del socket
 
-            //     outVersoClient.writeBytes(stringaRicevuta + "(=>server in chiusura ...)" + '\n');
-            //     // System.out.println("Echo sul server in chiusura :" + stringaRicevuta);
-            //     break;
+                if(listener2.verify(nomeUtente, client)){ //se il controllo va a buon fine allora il client entra nella chat, senno darà errore e richiederà l'inserimento dei dati
+                    nomeUtente = stringaRicevuta;
+                    listener2.aggiungiSocket(nomeUtente, client);
+                    conta++;
+                }
 
-            // } else 
-            
-            if (conta == 0) {
-                nomeUtente = stringaRicevuta;
-                listener2.aggiungiSocket(nomeUtente, client);
-                // System.out.println(nomeUtente + " si è connesso");
-                // lista.addNome(nomeUtente);
-                conta++;
-            } else {
-                // outVersoClient.writeBytes(stringaRicevuta + " (ricevuta e ritrasmessa)" + '\n');
-                System.out.println(nomeUtente + ": " + stringaRicevuta);
+            } else if(stringaRicevuta.charAt(0) == '$' && stringaRicevuta.charAt(1) == 'b'){ //TIPS: LE "text" VENGONO USATE PER LA STRINGA MENTRE 'text' PER LE CHAR
+                outVersoClient.writeBytes(stringaRicevuta + "Selezionato messaggio Pubblico, dimmi il messaggio che vuoi inviare." + '\n'); //confermo la selezione del PUBBLIC e chiedo al client il messaggio da inviare a tutti
+                stringaRicevuta = inDalClient.readLine(); //aspetto l'invio del messaggio
+                listener2.sendAll(stringaRicevuta, nomeUtente); //funzione del thread writer che esegue l'invio del messaggio a tutti i client connessi
+                outVersoClient.writeBytes("Messaggio inviato correttamente." + '\n');
+                System.out.println("SERVER DICE: HO APPENA INVIATO A TUTTI UN MESSAGGIO");
+
+            } else if(stringaRicevuta.charAt(0) == '$' && stringaRicevuta.charAt(1) == 'v'){
+                outVersoClient.writeBytes(stringaRicevuta + "Selezionato messaggio Privato, dimmi il destinatario del messaggio." + '\n'); //confermo la selezione del PRIVATE e chiedo al client il destinatario
+                stringaRicevuta = inDalClient.readLine(); //aspetto l'invio del nome del destinatario
+                destinatario = stringaRicevuta; //salvo il nome del destinatario in una variabile
+                outVersoClient.writeBytes(stringaRicevuta + "Selezionato destinatario " + destinatario + ", dimmi il messaggio che vuoi inviare." + '\n'); //adesso richiedo il messaggio da inviare al destinatario
+                stringaRicevuta = inDalClient.readLine(); //aspetto l'invio del messaggio
+                listener2.sendOne(stringaRicevuta, nomeUtente, destinatario);
+                outVersoClient.writeBytes("Messaggio inviato correttamente." + '\n');
+
+            }else if(stringaRicevuta.charAt(0) == '$' && stringaRicevuta.charAt(1) == 'e'){ //faccio uscire dalla chat l'utente
+                outVersoClient.writeBytes("Uscita dalla chat ..." + '\n');
+                listener2.remove(nomeUtente);
+                break;
             }
         }
-        // outVersoClient.close();
-
-        inDalClient.close(); //da errore perchè per ora non ho messo un breakk
-
-        // System.out.println("Chiusura socket " + client);
-        System.out.println(nomeUtente + " si è disconnesso");
+        outVersoClient.close();
+        inDalClient.close();
+        System.out.println("Chiusura socket: " + client);
         client.close();
-
     }
 }
