@@ -10,10 +10,9 @@ public class Server {
 
             for (;;) {
                 Socket socket = serverSocket.accept();
-                ServerListener writer1 = new ServerListener(socket, serverSocket);
-                ServerThread serverListener = new ServerThread(socket, serverSocket, writer1);
+                ServerListener hashMap = new ServerListener(socket, serverSocket);
+                ServerThread serverListener = new ServerThread(socket, serverSocket, hashMap);
                 serverListener.start();
-                writer1.start();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

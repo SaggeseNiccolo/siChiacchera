@@ -20,10 +20,10 @@ public class ClientListener extends Thread {
 
         for (;;) {
             stringaRicevutaDalServer = inDalServer.readLine();
-            System.out.println("\n" + "Stringa ricevuta: " + stringaRicevutaDalServer);
+            System.out.println("\n" + stringaRicevutaDalServer);
 
             if (stringaRicevutaDalServer.charAt(0) == '$' && stringaRicevutaDalServer.charAt(1) == 'e') {
-                System.out.println("Disconnessione...");
+                System.out.println("Disconnessione effettuata");
                 break;
             }
         }

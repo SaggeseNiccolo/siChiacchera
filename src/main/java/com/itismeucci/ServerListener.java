@@ -3,7 +3,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class ServerListener extends Thread {
+public class ServerListener {
     // creato vettore dove mi salvo tutti i socket dei client
     Vector<Socket> sockets = new Vector<Socket>();
     HashMap<String, Socket> handler = new HashMap<String, Socket>();
@@ -20,9 +20,6 @@ public class ServerListener extends Thread {
         this.client = socket;
         this.server = server;
         sockets.add(client);
-    }
-
-    public void run(){
     }
 
     public void aggiungiSocket(String nomeUtente, Socket Client) throws Exception {
