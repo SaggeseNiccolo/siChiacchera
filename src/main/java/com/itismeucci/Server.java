@@ -18,13 +18,13 @@ public class Server {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Errore durante l'istanza del server !");
+            System.out.println("Errore durante l'istanza del server!");
             System.exit(1);
         }
     }
 
     public static void main(String[] args) {
-        Server tcpServer = new Server();
-        tcpServer.start();
+        Server server = new Server();
+        server.start();
     }
 }

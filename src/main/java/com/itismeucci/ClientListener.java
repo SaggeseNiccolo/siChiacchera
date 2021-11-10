@@ -1,17 +1,34 @@
 package com.itismeucci;
 
 import java.io.*;
+import java.net.Socket;
 
 public class ClientListener extends Thread {
 
-    BufferedReader inDalServer = null;
+    Client client = new Client();
+    BufferedReader inDalServer;
+    String stringaRicevutaDalServer;
+    Socket mioSocket;
 
-    public ClientListener() {
+    // costruttore
+    public ClientListener(Socket socket) {
+        mioSocket = socket;
+    }
+
+    public void ascolta() throws IOException {
+        inDalServer = new BufferedReader(new InputStreamReader(mioSocket.getInputStream()));
+
+        for (;;) {
+            stringaRicevutaDalServer = inDalServer.readLine();
+            System.out.println(stringaRicevutaDalServer);
+        }
     }
 
     public void run() {
-        for (;;) {
-            // inDalServer = new BufferedReader(new InputStreamReader(server.getInputStream()));
+        try {
+            ascolta();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

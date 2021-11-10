@@ -1,8 +1,7 @@
 package com.itismeucci;
 import java.io.*;
 import java.net.*;
-import java.util.HashMap;
-import java.util.Vector;
+import java.util.*;
 
 public class ServerListener extends Thread {
     // creato vettore dove mi salvo tutti i socket dei client
