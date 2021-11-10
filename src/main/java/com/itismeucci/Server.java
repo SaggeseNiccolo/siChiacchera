@@ -10,8 +10,8 @@ public class Server {
 
             for (;;) {
                 Socket socket = serverSocket.accept();
-                ServerWriter writer1 = new ServerWriter(socket, serverSocket);
-                ServerListener serverListener = new ServerListener(socket, serverSocket, writer1);
+                ServerListener writer1 = new ServerListener(socket, serverSocket);
+                ServerThread serverListener = new ServerThread(socket, serverSocket, writer1);
                 serverListener.start();
                 writer1.start();
 
