@@ -62,11 +62,6 @@ public class Client {
                     // stringaRicevutaDalServer = inDalServer.readLine();
                     // System.out.println("Risposta dal server" + '\n' + stringaRicevutaDalServer);
 
-                    if (stringaUtente.equals("EXIT")) {
-                        System.out.println("Disconnessione dalla chat...");
-                        miosocket.close();
-                        break;
-                    }
                 }
 
             } catch (Exception e) {

@@ -64,7 +64,7 @@ public class ServerThread extends Thread {
                 System.out.println("SERVER DICE: HO APPENA INVIATO A " + destinatario + " UN MESSAGGIO");
 
             }else if(stringaRicevuta.charAt(0) == '$' && stringaRicevuta.charAt(1) == 'e'){ //faccio uscire dalla chat l'utente
-                outVersoClient.writeBytes("Uscita dalla chat ..." + '\n');
+                outVersoClient.writeBytes("$e" + '\n');
                 writer2.remove(nomeUtente);
                 break;
             }
