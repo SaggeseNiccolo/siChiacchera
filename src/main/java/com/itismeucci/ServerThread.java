@@ -35,7 +35,6 @@ public class ServerThread extends Thread {
 
 
         for (;;) {
-<<<<<<< HEAD
             stringaRicevuta = inDalClient.readLine(); //leggo la stringa inviata dal client
 
             if (conta == 0) { // se è la prima allora è perforza il nome dell'utente poichè questo viene richiesto all'inizio dell'esecuzione del socket
@@ -73,34 +72,6 @@ public class ServerThread extends Thread {
         outVersoClient.close();
         inDalClient.close();
         System.out.println("Chiusura socket: " + client);
-=======
-            stringaRicevuta = inDalClient.readLine();
-
-            if (stringaRicevuta.equals("EXIT")) { // IN QUESTO CASO DOBBIAMO FAR USCIRE IL CLIENT
-
-                // outVersoClient.writeBytes(stringaRicevuta + "(=>server in chiusura ...)" + '\n');
-                // System.out.println("Echo sul server in chiusura :" + stringaRicevuta);
-                break;
-
-            } else if (conta == 0) {
-                nomeUtente = stringaRicevuta;
-                listener2.aggiungiSocket(nomeUtente, client);
-                System.out.println(nomeUtente + " si è connesso");
-                // lista.addNome(nomeUtente);
-                conta++;
-
-            } else {
-                // outVersoClient.writeBytes(stringaRicevuta + " (ricevuta e ritrasmessa)" + '\n');
-                System.out.println(nomeUtente + ": " + stringaRicevuta);
-            }
-        }
-        // outVersoClient.close();
-
-        // inDalClient.close(); //da errore perchè per ora non ho messo un breakk
-
-        // System.out.println("Chiusura socket " + client);
-        System.out.println(nomeUtente + " si è disconnesso");
->>>>>>> main
         client.close();
     }
 }
