@@ -14,7 +14,6 @@ public class Server {
                 ServerThread serverListener = new ServerThread(socket, serverSocket, writer1);
                 serverListener.start();
                 writer1.start();
-
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
