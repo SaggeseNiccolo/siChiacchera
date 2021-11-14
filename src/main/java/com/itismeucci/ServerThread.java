@@ -54,7 +54,7 @@ public class ServerThread extends Thread {
             } else if (stringaRicevuta.charAt(0) == '$' && stringaRicevuta.charAt(1) == 'b') {
                 // confermo la selezione del PUBBLIC e chiedo al client il messaggio da inviare
                 // a tutti
-                outVersoClient.writeBytes("Selezionato messaggio Pubblico, Messaggio: " + '\n');
+                outVersoClient.writeBytes("Selezionato messaggio Pubblico" + '\n');
                 // aspetto l'invio del messaggio
                 stringaRicevuta = inDalClient.readLine();
                 // funzione del thread writer che esegue l'invio del messaggio a tutti i client
@@ -70,8 +70,7 @@ public class ServerThread extends Thread {
                 // salvo il nome del destinatario in una variabile
                 destinatario = stringaRicevuta;
                 // adesso richiedo il messaggio da inviare al destinatario
-                outVersoClient.writeBytes(
-                        stringaRicevuta + "Selezionato destinatario: " + destinatario + ", Messaggio:" + '\n');
+                outVersoClient.writeBytes(stringaRicevuta + "Selezionato destinatario: " + destinatario + '\n');
                 // aspetto l'invio del messaggio
                 stringaRicevuta = inDalClient.readLine();
                 writer2.sendOne(stringaRicevuta, nomeUtente, destinatario);
