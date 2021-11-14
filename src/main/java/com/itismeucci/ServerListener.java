@@ -23,14 +23,17 @@ public class ServerListener {
 
         for (Socket socket : handler.values()) {
             outVersoClient = new DataOutputStream(socket.getOutputStream());
-            outVersoClient.writeBytes(nomeUtente + " è entrato nella chat." + '\n');
+            outVersoClient.writeBytes(nomeUtente + " e' entrato nella chat." + '\n');
         }
     }
 
     public void sendAll(String messaggio, String mittente) throws Exception {
         for (Socket socket : handler.values()) {
-            outVersoClient = new DataOutputStream(socket.getOutputStream());
-            outVersoClient.writeBytes(mittente + " ha scritto:" + messaggio + '\n');
+            // controllo che il messaggio non venga inviato al mittente
+            // if (socket != handler.values()) {
+                outVersoClient = new DataOutputStream(socket.getOutputStream());
+                outVersoClient.writeBytes(mittente + ": " + messaggio + '\n');
+            // }
         }
     }
 
@@ -38,7 +41,7 @@ public class ServerListener {
         for (String x : handler.keySet()) {
             if (x.equals(destinatario)) {
                 outVersoClient = new DataOutputStream(handler.get(x).getOutputStream());
-                outVersoClient.writeBytes(mittente + " ha scritto (in privato):" + messaggio + '\n');
+                outVersoClient.writeBytes(mittente + " (privato):" + messaggio + '\n');
             }
         }
     }
@@ -48,7 +51,7 @@ public class ServerListener {
 
         for (Socket socket : handler.values()) {
             outVersoClient = new DataOutputStream(socket.getOutputStream());
-            outVersoClient.writeBytes(nome + " è uscito dalla chat." + '\n');
+            outVersoClient.writeBytes(nome + " e' uscito dalla chat." + '\n');
         }
     }
 

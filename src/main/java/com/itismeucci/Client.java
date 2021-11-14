@@ -43,9 +43,12 @@ public class Client {
         for (;;) {
             try {
                 if (conta == 0) {
-                    System.out.print("Inserisci nome utente: ");
+                    System.out.print("Inserire nome utente: ");
                     stringaUtente = tastiera.readLine();
                     outVersoServer.writeBytes(stringaUtente + '\n');
+                    System.out.println("$b: messaggio globale");
+                    System.out.println("$v: messaggio privato");
+                    System.out.println("$e: disconnessione dalla chat");
                     conta++;
                 } else {
                     ClientListener listener = new ClientListener(miosocket);
