@@ -1,13 +1,12 @@
 package com.itismeucci;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
 
 public class ServerListener {
-    // creato vettore dove mi salvo tutti i socket dei client
-    Vector<Socket> sockets = new Vector<Socket>();
+    // creo hashMap dove mi salvo tutti i socket dei client
     HashMap<String, Socket> handler = new HashMap<String, Socket>();
-    String nomeUtente = null;
     ServerSocket server = null;
     Socket client = null;
     String stringaRicevuta = null;
@@ -16,10 +15,7 @@ public class ServerListener {
     DataOutputStream outVersoClient;
 
     // costruttore
-    public ServerListener(Socket socket, ServerSocket server) {
-        this.client = socket;
-        this.server = server;
-        sockets.add(client);
+    public ServerListener() {
     }
 
     public void aggiungiSocket(String nomeUtente, Socket Client) throws Exception {
@@ -40,25 +36,25 @@ public class ServerListener {
 
     public void sendOne(String messaggio, String mittente, String destinatario) throws Exception {
         for (String x : handler.keySet()) {
-            if (x == destinatario) {
+            if (x.equals(destinatario)) {
                 outVersoClient = new DataOutputStream(handler.get(x).getOutputStream());
                 outVersoClient.writeBytes(mittente + " ha scritto (in privato):" + messaggio + '\n');
             }
         }
     }
 
-    public void remove(String nome) throws Exception{
+    public void remove(String nome) throws Exception {
         handler.remove(nome);
 
         for (Socket socket : handler.values()) {
             outVersoClient = new DataOutputStream(socket.getOutputStream());
-            outVersoClient.writeBytes(nomeUtente + " è uscito dalla chat." + '\n');
+            outVersoClient.writeBytes(nome + " è uscito dalla chat." + '\n');
         }
     }
 
-    public boolean verify(String nome, Socket client1) throws Exception{
+    public boolean verify(String nome, Socket client1) throws Exception {
         for (String x : handler.keySet()) {
-            if (x == nome) {
+            if (x.equals(nome)) {
                 outVersoClient = new DataOutputStream(client1.getOutputStream());
                 outVersoClient.writeBytes("Errore: il nome è gia stato inserito. Sceglierne un altro." + '\n');
                 return false;
